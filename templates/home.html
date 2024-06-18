@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <div>
+        <div class="search-container">
+            <form>
+                <input type="search" placeholder="搜索商品...">
+                <button type="submit">搜索</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block sty %}
+    <style>
+        .search-container {
+            height: 100%;
+            margin-top: 30vh;
+            display: flex;
+            justify-content: center; /* 水平居中 */
+            align-items: center; /* 垂直居中 */
+            padding: 20px;
+        }
+
+        .search-container input[type="search"] {
+            width: 400px; /* 宽度大一些 */
+            padding: 15px;
+            border: 2px solid #000; /* 黑色边框 */
+            border-radius: 25px 0 0 25px; /* 左边圆角 */
+            font-size: 18px; /* 字体大一些 */
+            outline: none; /* 去掉默认的点击时的边框 */
+            transition: border-color 0.3s; /* 过渡效果 */
+        }
+
+        .search-container button {
+            background-color: #fff; /* 背景颜色为白色 */
+            color: #000; /* 黑色字体 */
+            border: 2px solid #000; /* 黑色边框 */
+            border-left: none; /* 去掉左边边框 */
+            border-radius: 0 25px 25px 0; /* 右边圆角 */
+            padding: 15px 30px;
+            font-size: 18px; /* 字体大一些 */
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* 过渡效果 */
+        }
+
+        .search-container button:hover {
+            background-color: #000; /* 鼠标悬停时背景颜色变为黑色 */
+            color: #fff; /* 鼠标悬停时字体颜色变为白色 */
+        }
+
+        .search-container input[type="search"]:focus {
+            border-color: #888; /* 聚焦时边框颜色变为灰色 */
+        }
+    </style>
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}注册{% endblock %}
+{% block content %}
+<div class="container mt-5 d-flex justify-content-center align-items-center" style="height: 80vh;">
+    <div class="col-md-8">
+        <h2 class="text-center mb-4">注册</h2>
+
+        <!-- Flash messages block -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.email.label(class="form-label") }}
+                {{ form.email(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.password.label(class="form-label") }}
+                {{ form.password(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.confirm_password.label(class="form-label") }}
+                {{ form.confirm_password(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-primary btn-block") }}
+            </div>
+        </form>
+        <div class="text-center mt-3">
+            <p>已有账号？<a href="{{ url_for('users.login') }}">去登录</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block sty %}
+<style>
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    margin-bottom: 30px;
+}
+
+h2 {
+    margin-bottom: 30px;
+    color: #000;
+}
+
+.form-control {
+    border: 1px solid #000;
+    border-radius: 10px;
+    color: #000;
+    padding: 10px;
+    width: 100%;
+}
+
+.btn-primary {
+    background-color: #000;
+    border-color: #000;
+    border-radius: 10px;
+    padding: 10px;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #333;
+    border-color: #333;
+}
+
+.form-group label {
+    color: #000;
+}
+
+.container {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* 确保flash消息显示正确 */
+.alert {
+    margin-top: 20px;
+}
+
+.alert-dismissible .close {
+    position: relative;
+    top: -2px;
+    right: -21px;
+    color: inherit;
+}
+</style>
+{% endblock %}
