@@ -36,14 +36,18 @@ def add_user():
         password = request.form.get('password')
         is_admin = request.form.get('is_admin') == 'on'
 
+        # 验证邮箱是否已存在
         if User.query.filter_by(email=email).first():
             flash('该邮箱已存在。', 'danger')
         else:
-            new_user = User(email=email, password=bcrypt.generate_password_hash(password).decode('utf-8'), is_admin=is_admin)
-            db.session.add(new_user)
-            db.session.commit()
-            flash('用户已创建。', 'success')
-            return redirect(url_for('admin.admin_dashboard'))
+            if not email or not password:
+                flash('邮箱和密码不能为空。', 'danger')
+            else:
+                new_user = User(email=email, password=bcrypt.generate_password_hash(password).decode('utf-8'), is_admin=is_admin)
+                db.session.add(new_user)
+                db.session.commit()
+                flash('用户已创建。', 'success')
+                return redirect(url_for('admin.admin_dashboard'))
 
     return render_template('add_user.html', title='Add User')
 
@@ -58,13 +62,24 @@ def edit_user(user_id):
     user = User.query.get_or_404(user_id)
 
     if request.method == 'POST':
-        user.email = request.form.get('email')
-        user.is_admin = request.form.get('is_admin') == 'on'
-        if request.form.get('password'):
-            user.password = bcrypt.generate_password_hash(request.form.get('password')).decode('utf-8')
-        db.session.commit()
-        flash('用户信息已更新。', 'success')
-        return redirect(url_for('admin.admin_dashboard'))
+        email = request.form.get('email')
+        password = request.form.get('password')
+        is_admin = request.form.get('is_admin') == 'on'
+
+        # 验证邮箱是否已存在（排除当前编辑的用户）
+        if User.query.filter(User.email == email, User.id != user.id).first():
+            flash('该邮箱已存在。', 'danger')
+        else:
+            if not email:
+                flash('邮箱不能为空。', 'danger')
+            else:
+                user.email = email
+                user.is_admin = is_admin
+                if password:
+                    user.password = bcrypt.generate_password_hash(password).decode('utf-8')
+                db.session.commit()
+                flash('用户信息已更新。', 'success')
+                return redirect(url_for('admin.admin_dashboard'))
 
     return render_template('edit_user.html', title='Edit User', user=user)
 

@@ -27,7 +27,8 @@ app.register_blueprint(admin)
 
 from flask_migrate import Migrate # 数据库迁移配置
 migrate = Migrate(app, db)
-
+# 静态文件的 URL 路径
+app.static_folder = 'static'
 
 if __name__ == '__main__':
     app.run(debug=True)

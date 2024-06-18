@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}编辑用户{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">编辑用户</h2>
+    <div class="card shadow-sm p-4">
+        <form method="POST">
+            <div class="form-group">
+                <label for="email">邮箱</label>
+                <input type="email" name="email" class="form-control" value="{{ user.email }}" required>
+            </div>
+            <div class="form-group">
+                <label for="password">密码（如果不修改请留空）</label>
+                <input type="password" name="password" class="form-control">
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" name="is_admin" class="form-check-input" {% if user.is_admin %}checked{% endif %}>
+                <label class="form-check-label" for="is_admin">管理员</label>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">保存修改</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block sty %}
+<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-4.6.2-dist/css/bootstrap.min.css') }}">
+<script src="{{ url_for('static', filename='bootstrap-4.6.2-dist/js/bootstrap.bundle.min.js') }}"></script>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    margin-bottom: 30px;
+}
+
+h2 {
+    margin-bottom: 30px;
+    color: #000;
+}
+
+.card {
+    border: 1px solid #e3e3e3;
+    border-radius: 8px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+</style>
+{% endblock %}

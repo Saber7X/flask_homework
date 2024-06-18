@@ -1,4 +1,3 @@
-<!-- templates/admin.html -->
 {% extends "base.html" %}
 {% block title %}管理员面板{% endblock %}
 {% block content %}
@@ -19,11 +18,16 @@
         {% endif %}
     {% endwith %}
 
+    <div class="text-center mb-4">
+        <a href="{{ url_for('admin.add_user') }}" class="btn btn-success">添加用户</a>
+    </div>
+
     <table class="table table-striped">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>邮箱</th>
+                <th>管理员</th>
                 <th>操作</th>
             </tr>
         </thead>
@@ -32,7 +36,9 @@
                 <tr>
                     <td>{{ user.id }}</td>
                     <td>{{ user.email }}</td>
+                    <td>{{ '是' if user.is_admin else '否' }}</td>
                     <td>
+                        <a href="{{ url_for('admin.edit_user', user_id=user.id) }}" class="btn btn-primary btn-sm">编辑</a>
                         <form method="POST" action="{{ url_for('admin.delete_user', user_id=user.id) }}" style="display: inline;">
                             <button type="submit" class="btn btn-danger btn-sm">删除</button>
                         </form>
@@ -83,7 +89,7 @@ h2 {
     color: inherit;
 }
 
-.btn-danger {
+.btn-danger, .btn-primary, .btn-success {
     border-radius: 5px;
     padding: 5px 10px;
 }
