@@ -50,9 +50,6 @@ def search():
 
 @predict_app.route('/trend')
 def trend():
-    query = request.form.get('query')
-    # 在这里实现你的搜索逻辑
-
     # 获取并处理数据
     df = get_data()
     df['date'] = pd.to_datetime(df['date'])

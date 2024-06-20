@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 {% block title %}管理员面板{% endblock %}
+{% block active5 %}
+        active
+{% endblock %}
 {% block content %}
+
 <div class="container mt-5">
+
     <h2 class="text-center mb-4">管理员面板</h2>
 
     <!-- Flash messages block -->
@@ -27,6 +32,8 @@
             <tr>
                 <th>ID</th>
                 <th>邮箱</th>
+                <th>电话号码</th>
+                <th>注册时间</th>
                 <th>管理员</th>
                 <th>操作</th>
             </tr>
@@ -36,6 +43,8 @@
                 <tr>
                     <td>{{ user.id }}</td>
                     <td>{{ user.email }}</td>
+                    <td>{{ user.phone }}</td>
+                    <td>{{ user.created_at }}</td>
                     <td>{{ '是' if user.is_admin else '否' }}</td>
                     <td>
                         <a href="{{ url_for('admin.edit_user', user_id=user.id) }}" class="btn btn-primary btn-sm">编辑</a>
