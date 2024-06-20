@@ -21,10 +21,12 @@ login_manager.login_view = 'login'
 login_manager.login_message_category = 'info'
 
 from userapp import  users
-app.register_blueprint(users)
 from adminapp import admin
-app.register_blueprint(admin)
+from predictapp import predict_app
 
+app.register_blueprint(admin)
+app.register_blueprint(users)
+app.register_blueprint(predict_app)
 from flask_migrate import Migrate # 数据库迁移配置
 migrate = Migrate(app, db)
 # 静态文件的 URL 路径
