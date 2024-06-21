@@ -2,6 +2,19 @@
 {% block title %}编辑用户{% endblock %}
 {% block content %}
 <div class="container mt-5">
+    <!-- Flash messages block -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
     <h2 class="text-center mb-4">编辑用户</h2>
     <div class="card shadow-sm p-4">
         <form method="POST">

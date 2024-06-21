@@ -2,23 +2,36 @@
 {% block title %}添加用户{% endblock %}
 {% block content %}
 <div class="container mt-5">
+    <!-- Flash messages block -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
     <h2 class="text-center mb-4">添加用户</h2>
     <div class="card shadow-sm p-4">
         <form method="POST">
             <div class="form-group">
                 <label for="email">邮箱</label>
-                <input type="email" name="email" class="form-control" required>
+                <input type="email" name="email" class="form-control" value="{{ user.email }}" required>
             </div>
             <div class="form-group">
                 <label for="phone">电话号码</label>
-                <input type="number" name="phone" class="form-control" required>
+                <input type="number" name="phone" class="form-control" value="{{ user.phone }}" required>
             </div>
             <div class="form-group">
                 <label for="password">密码</label>
                 <input type="password" name="password" class="form-control" required>
             </div>
             <div class="form-group form-check">
-                <input type="checkbox" name="is_admin" class="form-check-input">
+                <input type="checkbox" name="is_admin" class="form-check-input" value="{{ user.is_admin }}">
                 <label class="form-check-label" for="is_admin">管理员</label>
             </div>
             <button type="submit" class="btn btn-success btn-block">添加用户</button>

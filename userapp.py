@@ -83,8 +83,10 @@ def register():
         user = User.query.filter_by(email=form.email.data).first()
         if user:
             flash('该邮箱已被注册，请使用其他邮箱。', 'danger')
-            return redirect(url_for('users.register'))
-
+            return render_template('register.html', title='注册', form=form)
+        if User.query.filter_by(phone=form.phone.data).first():
+            flash('该电话号码已被注册，请使用其他号码。', 'danger')
+            return render_template('register.html', title='注册', form=form)
         # Check password requirements
         if len(form.password.data) < 8:
             flash('密码长度必须至少为8个字符。', 'danger')
@@ -122,7 +124,7 @@ def login():
             login_user(user, remember=True)
             session['username'] = form.email.data
             next_page = request.args.get('next')
-            flash('登录成功', 'content')
+            flash('登录成功', 'success')
             return redirect(next_page) if next_page else redirect(url_for('users.home'))
         else:
             flash('登录失败，请检查邮箱和密码', 'danger')

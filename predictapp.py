@@ -21,33 +21,6 @@ def get_data():
     df = pd.DataFrame(data)
     return df
 
-@predict_app.route('/search', methods=['POST'])
-def search():
-    query = request.form.get('query')
-    # 在这里实现你的搜索逻辑
-
-    # 获取并处理数据
-    df = get_data()
-    df['date'] = pd.to_datetime(df['date'])
-    df = df.groupby(df['date'].dt.to_period('M')).size().reset_index(name='count')
-    df['date'] = df['date'].dt.to_timestamp()
-
-    # 线性回归
-    X = np.array((df['date'] - df['date'].min()).dt.days).reshape(-1, 1)
-    y = df['count'].values
-    model = LinearRegression()
-    model.fit(X, y)
-
-    # 预测未来
-    future_dates = pd.date_range(df['date'].max(), periods=12, freq='M')
-    future_X = np.array((future_dates - df['date'].min()).days).reshape(-1, 1)
-    future_y = model.predict(future_X)
-
-    original_data = [{'date': date, 'value': value} for date, value in zip(df['date'], df['count'])]
-    future_data = [{'date': date, 'predicted_value': value} for date, value in zip(future_dates, future_y)]
-
-    return render_template('search_results.html', original_data=original_data, future_data=future_data)
-
 @predict_app.route('/trend')
 def trend():
     # 获取并处理数据
