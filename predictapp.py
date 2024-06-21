@@ -1,5 +1,3 @@
-from collections import Counter
-
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 from flask import Flask, render_template, request, jsonify, Blueprint

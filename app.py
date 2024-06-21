@@ -11,7 +11,7 @@ from flask_login import current_user, login_user, logout_user, login_required, L
 app = Flask(__name__)
 
 app.secret_key = 'your_secret_key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Q290538T47@localhost/flask_test'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:123456@localhost/flask_test'
 app.config['SQLALCHEMY_TRACK_MODIFICATION'] = False
 
 db = SQLAlchemy(app)
@@ -27,8 +27,10 @@ from predictapp import predict_app
 app.register_blueprint(admin)
 app.register_blueprint(users)
 app.register_blueprint(predict_app)
+
 from flask_migrate import Migrate # 数据库迁移配置
 migrate = Migrate(app, db)
+
 # 静态文件的 URL 路径
 app.static_folder = 'static'
 
